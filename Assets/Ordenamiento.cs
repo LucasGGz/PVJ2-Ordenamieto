@@ -8,7 +8,7 @@ public class Ordenamiento : MonoBehaviour
     public int CubeHeightMax = 10;
     public GameObject[] Cubes;
 
-    private void Start()
+    public void StartSort()
     {
         InitializeRandom();
         StartCoroutine(SelectiornSort(Cubes));
@@ -30,7 +30,7 @@ public class Ordenamiento : MonoBehaviour
                 // Cambiar color del objeto actual a verde mientras se compara
                 LeanTween.color(unsortedList[j], Color.green, 0.5f);
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.6f);
 
                 // Restaurar el color del objeto comparado
                 LeanTween.color(unsortedList[j], Color.white, 0.1f);
@@ -39,12 +39,9 @@ public class Ordenamiento : MonoBehaviour
                     min = j;
                     LeanTween.color(unsortedList[min], Color.magenta, 0.1f);
                 }
-
             }
-
             if (min != i)
             {
-                yield return new WaitForSeconds(1);
                 temp = unsortedList[i];
                 unsortedList[i] = unsortedList[min];
                 unsortedList[min] = temp;
