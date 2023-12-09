@@ -14,6 +14,14 @@ public class Ordenamiento : MonoBehaviour
         StartCoroutine(SelectiornSort(Cubes));
 
     }
+
+    public void StartIncer()
+    {
+        InitializeRandom();
+        StartCoroutine(InsertionSort(Cubes));
+
+    }
+
     IEnumerator SelectiornSort(GameObject[] unsortedList)
     {
         int min;
@@ -24,24 +32,29 @@ public class Ordenamiento : MonoBehaviour
             min = i;
             // Cambiar color del objeto actual a azul
             LeanTween.color(unsortedList[i], Color.blue, 0.5f);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.7f);
             for (int j = i + 1; j < unsortedList.Length; j++)
             {
                 // Cambiar color del objeto actual a verde mientras se compara
                 LeanTween.color(unsortedList[j], Color.green, 0.5f);
 
-                yield return new WaitForSeconds(0.6f);
+                yield return new WaitForSeconds(0.7f);
 
                 // Restaurar el color del objeto comparado
                 LeanTween.color(unsortedList[j], Color.white, 0.1f);
                 if (unsortedList[j].transform.localScale.y < unsortedList[min].transform.localScale.y)
                 {
                     min = j;
-                    LeanTween.color(unsortedList[min], Color.magenta, 0.1f);
+                    LeanTween.color(unsortedList[min], Color.magenta, 0.4f);
+                    yield return new WaitForSeconds(0.4f);
+                    LeanTween.color(unsortedList[min], Color.white, 0.5f);
                 }
             }
+
             if (min != i)
             {
+                LeanTween.color(unsortedList[min], Color.magenta, 0.6f);
+                yield return new WaitForSeconds(0.7f);
                 temp = unsortedList[i];
                 unsortedList[i] = unsortedList[min];
                 unsortedList[min] = temp;
@@ -58,7 +71,7 @@ public class Ordenamiento : MonoBehaviour
             LeanTween.color(unsortedList[i], Color.green, 0.5f);
 
             // Esperar un tiempo antes de la siguiente iteración
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.7f);
 
             // Restaurar el color del objeto seleccionado
             LeanTween.color(unsortedList[min], Color.white, 0.1f);
@@ -67,8 +80,44 @@ public class Ordenamiento : MonoBehaviour
             LeanTween.color(unsortedList[i], Color.white, 0.1f);
 
         }
-
     }
+    IEnumerator InsertionSort(GameObject[] unsortedList)
+    {
+        int n = unsortedList.Length;
+
+        for (int i = 1; i < n; i++)
+        {
+            GameObject key = unsortedList[i];
+            int j = i - 1;
+            LeanTween.color(key, Color.blue, 0.5f);
+            yield return new WaitForSeconds(0.6f);
+
+            while (j >= 0 && unsortedList[j].transform.localScale.y > key.transform.localScale.y)
+            {
+                LeanTween.color(unsortedList[j], Color.red, 0.5f);
+                yield return new WaitForSeconds(0.7f);
+                LeanTween.color(unsortedList[j], Color.white, 0.5f);
+                LeanTween.color(key, Color.magenta, 0.5f);
+                unsortedList[j + 1] = unsortedList[j];
+
+                LeanTween.moveLocalX(unsortedList[j + 1], unsortedList[j + 1].transform.localPosition.x + 1, 0.4f);
+
+                j = j - 1;
+
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            unsortedList[j + 1] = key;
+
+            LeanTween.moveLocalX(key, j + 1, 0.4f);
+            LeanTween.color(key, Color.green, 0.5f);
+
+            yield return new WaitForSeconds(0.7f);
+
+            LeanTween.color(key, Color.white, 0.1f);
+        }
+    }
+
     void InitializeRandom()
     {
         Cubes = new GameObject[NumberOfCubes];

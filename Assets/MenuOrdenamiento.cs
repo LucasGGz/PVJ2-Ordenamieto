@@ -17,6 +17,13 @@ public class MenuOrdenamiento : MonoBehaviour
         activarOrdenamiento.StartSort();
     }
 
+    public void StartInser()
+    {
+        activarOrdenamiento = Instantiate(ordenamiento);
+        activarOrdenamiento.NumberOfCubes = Convert.ToInt16(inputFieldNumberOfCubes.text);
+        activarOrdenamiento.StartIncer();
+    }
+
     public void ResetSort()
     {
         Destroy(activarOrdenamiento.gameObject);
