@@ -90,21 +90,23 @@ public class Ordenamiento : MonoBehaviour
             GameObject key = unsortedList[i];
             int j = i - 1;
             LeanTween.color(key, Color.blue, 0.5f);
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(0.5f);
 
             while (j >= 0 && unsortedList[j].transform.localScale.y > key.transform.localScale.y)
             {
                 LeanTween.color(unsortedList[j], Color.red, 0.5f);
                 yield return new WaitForSeconds(0.7f);
                 LeanTween.color(unsortedList[j], Color.white, 0.5f);
-                LeanTween.color(key, Color.magenta, 0.5f);
-                unsortedList[j + 1] = unsortedList[j];
+                LeanTween.color(key, Color.magenta, 0.6f);
+                GameObject temp = unsortedList[j];
+                unsortedList[j] = unsortedList[j + 1];
+                unsortedList[j + 1] = temp;
 
                 LeanTween.moveLocalX(unsortedList[j + 1], unsortedList[j + 1].transform.localPosition.x + 1, 0.4f);
 
                 j = j - 1;
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.6f);
             }
 
             unsortedList[j + 1] = key;
