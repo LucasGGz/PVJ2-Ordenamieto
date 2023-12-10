@@ -4,38 +4,39 @@ using UnityEngine;
 
 public class Ordenamiento : MonoBehaviour
 {
-    public int NumberOfCubes = 7;
-    public int CubeHeightMax = 10;
-    public GameObject[] Cubes;
+    public int NumberOfCubes = 7;  // Número de cubos a ordenar
+    public int CubeHeightMax = 10; // Altura máxima de los cubos
+    public GameObject[] Cubes;     // Arreglo para almacenar objetos de cubos
 
+    // Método para iniciar el algoritmo de ordenamiento de selección
     public void StartSort()
     {
-        InitializeRandom();
-        StartCoroutine(SelectiornSort(Cubes));
-
+        InitializeRandom();  // Inicializar el arreglo con cubos aleatorios
+        StartCoroutine(SelectiornSort(Cubes));  // Iniciar el algoritmo de ordenamiento de selección
     }
 
+    // Método para iniciar el algoritmo de ordenamiento de inserción
     public void StartIncer()
     {
-        InitializeRandom();
-        StartCoroutine(InsertionSort(Cubes));
-
+        InitializeRandom();  // Inicializar el arreglo con cubos aleatorios
+        StartCoroutine(InsertionSort(Cubes));  // Iniciar el algoritmo de ordenamiento de inserción
     }
-  
+
+    // Método para iniciar el algoritmo de ordenamiento de burbuja
     public void StartBubble()
     {
-        InitializeRandom();
-        StartCoroutine(BubbleSort(Cubes));
-
+        InitializeRandom();  // Inicializar el arreglo con cubos aleatorios
+        StartCoroutine(BubbleSort(Cubes));  // Iniciar el algoritmo de ordenamiento de burbuja
     }
 
-      public void StartQuickSort()
-  {
-      InitializeRandom();
-      StartCoroutine(QuickSort(Cubes, 0, Cubes.Length - 1));
-  }
+    // Método para iniciar el algoritmo de quicksort
+    public void StartQuickSort()
+    {
+        InitializeRandom();  // Inicializar el arreglo con cubos aleatorios
+        StartCoroutine(QuickSort(Cubes, 0, Cubes.Length - 1));  // Iniciar el algoritmo de quicksort
+    }
 
-
+    // Corrutina para el algoritmo de ordenamiento de selección
     IEnumerator SelectiornSort(GameObject[] unsortedList)
     {
         int min;
@@ -44,12 +45,12 @@ public class Ordenamiento : MonoBehaviour
         for (int i = 0; i < unsortedList.Length; i++)
         {
             min = i;
-            // Cambiar color del objeto actual a azul
+            // Cambiar el color del objeto actual a azul
             LeanTween.color(unsortedList[i], Color.blue, 0.5f);
             yield return new WaitForSeconds(0.7f);
             for (int j = i + 1; j < unsortedList.Length; j++)
             {
-                // Cambiar color del objeto actual a verde mientras se compara
+                // Cambiar el color del objeto actual a verde mientras se compara
                 LeanTween.color(unsortedList[j], Color.green, 0.5f);
 
                 yield return new WaitForSeconds(0.7f);
@@ -81,10 +82,10 @@ public class Ordenamiento : MonoBehaviour
                 LeanTween.moveLocalZ(unsortedList[min], 3, .5f).setLoopPingPong(1);
             }
 
-            // Cambiar color del objeto actual a verde despu�s de la comparaci�n y posible intercambio
+            // Cambiar el color del objeto actual a verde después de la comparación y posible intercambio
             LeanTween.color(unsortedList[i], Color.green, 0.5f);
 
-            // Esperar un tiempo antes de la siguiente iteraci�n
+            // Esperar un tiempo antes de la siguiente iteración
             yield return new WaitForSeconds(0.7f);
 
             // Restaurar el color del objeto seleccionado
@@ -92,9 +93,9 @@ public class Ordenamiento : MonoBehaviour
 
             // Restaurar el color del objeto actual
             LeanTween.color(unsortedList[i], Color.white, 0.1f);
-
         }
     }
+    // Corrutina para el algoritmo de ordenamiento de inserción
     IEnumerator InsertionSort(GameObject[] unsortedList)
     {
         int n = unsortedList.Length;
@@ -134,6 +135,7 @@ public class Ordenamiento : MonoBehaviour
         }
     }
 
+    // Corrutina para el algoritmo de ordenamiento de burbuja
     IEnumerator BubbleSort(GameObject[] unsortedList)
     {
 
@@ -146,7 +148,7 @@ public class Ordenamiento : MonoBehaviour
 
             for (int j = 0; j < n - i - 1; j++)
             {
-                // Cambiar color del objeto actual a azul
+                // Cambiar el color del objeto actual a azul
                 LeanTween.color(unsortedList[j], Color.blue, 0.5f);
                 LeanTween.color(unsortedList[j + 1], Color.blue, 0.5f);
                 yield return new WaitForSeconds(0.7f);
@@ -162,17 +164,17 @@ public class Ordenamiento : MonoBehaviour
                     unsortedList[j] = unsortedList[j + 1];
                     unsortedList[j + 1] = temp;
 
-                    // Animaci�n de intercambio
+                    // Animación de intercambio
                     float tempX = unsortedList[j].transform.localPosition.x;
                     LeanTween.moveLocalX(unsortedList[j], unsortedList[j + 1].transform.localPosition.x, 0.5f);
                     LeanTween.moveLocalX(unsortedList[j + 1], tempX, 0.5f);
 
-                    // Cambiar color del objeto actual a magenta despu�s del intercambio
+                    // Cambiar el color del objeto actual a magenta después del intercambio
                     LeanTween.color(unsortedList[j], Color.magenta, 0.6f);
                     yield return new WaitForSeconds(0.7f);
                     LeanTween.color(unsortedList[j], Color.white, 0.5f);
 
-                    // Cambiar color del objeto siguiente a magenta despu�s del intercambio
+                    // Cambiar el color del objeto siguiente a magenta después del intercambio
                     LeanTween.color(unsortedList[j + 1], Color.magenta, 0.6f);
                     yield return new WaitForSeconds(0.7f);
                     LeanTween.color(unsortedList[j + 1], Color.white, 0.5f);
@@ -181,12 +183,13 @@ public class Ordenamiento : MonoBehaviour
                 }
             }
 
-            // Si no se realizaron intercambios en esta iteraci�n, la lista est� ordenada
+            // Si no se realizaron intercambios en esta iteración, la lista está ordenada
             if (!swapped)
                 break;
         }
     }
 
+    // Método para inicializar aleatoriamente el arreglo de cubos
     void InitializeRandom()
     {
         Cubes = new GameObject[NumberOfCubes];
@@ -200,51 +203,53 @@ public class Ordenamiento : MonoBehaviour
             Cubes[i] = cube;
         }
         transform.position = new Vector3(-NumberOfCubes / 2f, -CubeHeightMax / 2f, 0);
-
     }
-IEnumerator QuickSort(GameObject[] arr, int low, int high)
-{
-    if (low < high)
+
+    // Corrutina para el algoritmo de quicksort
+    IEnumerator QuickSort(GameObject[] arr, int low, int high)
     {
-        yield return StartCoroutine(Partition(arr, low, high));
-    }
-}
-
-IEnumerator Partition(GameObject[] arr, int low, int high)
-{
-    GameObject pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++)
-    {
-        LeanTween.color(arr[high], Color.blue, 0.5f);
-        LeanTween.color(arr[j], Color.green, 0.5f);
-        yield return new WaitForSeconds(0.7f);
-        LeanTween.color(arr[j], Color.white, 0.1f);
-
-        if (arr[j].transform.localScale.y < pivot.transform.localScale.y || (arr[j].transform.localScale.y == pivot.transform.localScale.y && j < high))
+        if (low < high)
         {
-            i++;
-            GameObject temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-
-            // Animaciones para el intercambio de los cubos
-            MoverCubo(arr[i], i);
-            MoverCubo(arr[j], j);
-
-                LeanTween.color(arr[i], Color.white, 0.1f);
-                yield return new WaitForSeconds(0.7f);
+            yield return StartCoroutine(Partition(arr, low, high));
         }
     }
 
-    GameObject tempPivot = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = tempPivot;
+    // Corrutina para la partición en el algoritmo de quicksort
+    IEnumerator Partition(GameObject[] arr, int low, int high)
+    {
+        GameObject pivot = arr[high];
+        int i = low - 1;
 
-    // Animaciones para el intercambio del pivote
-    MoverCubo(arr[i + 1], i + 1);
-    MoverCubo(arr[high], high);
+        for (int j = low; j < high; j++)
+        {
+            LeanTween.color(arr[high], Color.blue, 0.5f);
+            LeanTween.color(arr[j], Color.green, 0.5f);
+            yield return new WaitForSeconds(0.7f);
+            LeanTween.color(arr[j], Color.white, 0.1f);
+
+            if (arr[j].transform.localScale.y < pivot.transform.localScale.y || (arr[j].transform.localScale.y == pivot.transform.localScale.y && j < high))
+            {
+                i++;
+                GameObject temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+
+                // Animaciones para el intercambio de los cubos
+                MoverCubo(arr[i], i);
+                MoverCubo(arr[j], j);
+
+                LeanTween.color(arr[i], Color.white, 0.1f);
+                yield return new WaitForSeconds(0.7f);
+            }
+        }
+
+        GameObject tempPivot = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = tempPivot;
+
+        // Animaciones para el intercambio del pivote
+        MoverCubo(arr[i + 1], i + 1);
+        MoverCubo(arr[high], high);
 
         LeanTween.color(arr[i + 1], Color.green, 0.5f);
         yield return new WaitForSeconds(0.7f);
@@ -253,16 +258,16 @@ IEnumerator Partition(GameObject[] arr, int low, int high)
 
         int partitionIndex = i + 1;
 
-    yield return StartCoroutine(QuickSort(arr, low, partitionIndex - 1));
-    yield return StartCoroutine(QuickSort(arr, partitionIndex + 1, high));
-}
+        yield return StartCoroutine(QuickSort(arr, low, partitionIndex - 1));
+        yield return StartCoroutine(QuickSort(arr, partitionIndex + 1, high));
+    }
 
-void MoverCubo(GameObject cubo, int nuevaPosicion)
-{
-    Vector3 posicionObjetivo = new Vector3(nuevaPosicion, cubo.transform.localScale.y / 2f, 0);
+    // Método para mover un cubo a una nueva posición con animación
+    void MoverCubo(GameObject cubo, int nuevaPosicion)
+    {
+        Vector3 posicionObjetivo = new Vector3(nuevaPosicion, cubo.transform.localScale.y / 2f, 0);
 
-    // Animaci�n para mover el cubo
-    LeanTween.moveLocal(cubo, posicionObjetivo, 0.5f);
-}
-
+        // Animación para mover el cubo
+        LeanTween.moveLocal(cubo, posicionObjetivo, 0.5f);
+    }
 }
