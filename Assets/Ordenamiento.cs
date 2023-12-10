@@ -222,7 +222,7 @@ IEnumerator Partition(GameObject[] arr, int low, int high)
         yield return new WaitForSeconds(0.7f);
         LeanTween.color(arr[j], Color.white, 0.1f);
 
-        if (arr[j].transform.localScale.y < pivot.transform.localScale.y)
+        if (arr[j].transform.localScale.y < pivot.transform.localScale.y || (arr[j].transform.localScale.y == pivot.transform.localScale.y && j < high))
         {
             i++;
             GameObject temp = arr[i];
