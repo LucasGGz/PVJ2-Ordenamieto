@@ -233,8 +233,8 @@ IEnumerator Partition(GameObject[] arr, int low, int high)
             MoverCubo(arr[i], i);
             MoverCubo(arr[j], j);
 
-            LeanTween.color(arr[i], Color.green, 0.5f);
-            yield return new WaitForSeconds(0.7f);
+                LeanTween.color(arr[i], Color.white, 0.1f);
+                yield return new WaitForSeconds(0.7f);
         }
     }
 
@@ -246,11 +246,12 @@ IEnumerator Partition(GameObject[] arr, int low, int high)
     MoverCubo(arr[i + 1], i + 1);
     MoverCubo(arr[high], high);
 
-    LeanTween.color(arr[i + 1], Color.green, 0.5f);
-    yield return new WaitForSeconds(0.7f);
-    LeanTween.color(arr[high], Color.white, 0.1f);
+        LeanTween.color(arr[i + 1], Color.green, 0.5f);
+        yield return new WaitForSeconds(0.7f);
+        LeanTween.color(arr[i + 1], Color.white, 0.1f);
+        LeanTween.color(arr[high], Color.white, 0.1f);
 
-    int partitionIndex = i + 1;
+        int partitionIndex = i + 1;
 
     yield return StartCoroutine(QuickSort(arr, low, partitionIndex - 1));
     yield return StartCoroutine(QuickSort(arr, partitionIndex + 1, high));
