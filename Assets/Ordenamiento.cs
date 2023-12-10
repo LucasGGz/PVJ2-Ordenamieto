@@ -202,54 +202,66 @@ public class Ordenamiento : MonoBehaviour
         transform.position = new Vector3(-NumberOfCubes / 2f, -CubeHeightMax / 2f, 0);
 
     }
+IEnumerator QuickSort(GameObject[] arr, int low, int high)
+{
+    if (low < high)
+    {
+        yield return StartCoroutine(Partition(arr, low, high));
+    }
+}
 
-     IEnumerator QuickSort(GameObject[] arr, int low, int high)
-  {
-      if (low < high)
-      {
-          yield return StartCoroutine(Partition(arr, low, high));
-      }
-  }
-  IEnumerator Partition(GameObject[] arr, int low, int high)
-  {
-      GameObject pivot = arr[high];
-      int i = low - 1;
-      for (int j = low; j < high; j++)
-      {
-          LeanTween.color(arr[high], Color.blue, 0.5f);
-          LeanTween.color(arr[j], Color.green, 0.5f);
-          yield return new WaitForSeconds(0.7f);
-          LeanTween.color(arr[j], Color.white, 0.1f);
-          if (arr[j].transform.localScale.y < pivot.transform.localScale.y)
-          {
-              i++;
-              GameObject temp = arr[i];
-              arr[i] = arr[j];
-              arr[j] = temp;
-              // Animaciones de intercambio
-              MoveCube(arr[i], i);
-              MoveCube(arr[j], j);
-              LeanTween.color(arr[i], Color.green, 0.5f);
-              yield return new WaitForSeconds(0.7f);
-          }
-      }
-      GameObject tempPivot = arr[i + 1];
-      arr[i + 1] = arr[high];
-      arr[high] = tempPivot;
-      // Animaciones de intercambio
-      MoveCube(arr[i + 1], i + 1);
-      MoveCube(arr[high], high);
-      LeanTween.color(arr[i + 1], Color.green, 0.5f);
-      yield return new WaitForSeconds(0.7f);
-      LeanTween.color(arr[high], Color.white, 0.1f);
-      int partitionIndex = i + 1;
-      yield return StartCoroutine(QuickSort(arr, low, partitionIndex - 1));
-      yield return StartCoroutine(QuickSort(arr, partitionIndex + 1, high));
-  }
-  void MoveCube(GameObject cube, int newPosition)
-  {
-      Vector3 targetPosition = new Vector3(newPosition, cube.transform.localScale.y / 2f, 0);
-      LeanTween.move(cube, targetPosition, 1f);
-  }
+IEnumerator Partition(GameObject[] arr, int low, int high)
+{
+    GameObject pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++)
+    {
+        LeanTween.color(arr[high], Color.blue, 0.5f);
+        LeanTween.color(arr[j], Color.green, 0.5f);
+        yield return new WaitForSeconds(0.7f);
+        LeanTween.color(arr[j], Color.white, 0.1f);
+
+        if (arr[j].transform.localScale.y < pivot.transform.localScale.y)
+        {
+            i++;
+            GameObject temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+
+            // Animaciones para el intercambio de los cubos
+            MoverCubo(arr[i], i);
+            MoverCubo(arr[j], j);
+
+            LeanTween.color(arr[i], Color.green, 0.5f);
+            yield return new WaitForSeconds(0.7f);
+        }
+    }
+
+    GameObject tempPivot = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = tempPivot;
+
+    // Animaciones para el intercambio del pivote
+    MoverCubo(arr[i + 1], i + 1);
+    MoverCubo(arr[high], high);
+
+    LeanTween.color(arr[i + 1], Color.green, 0.5f);
+    yield return new WaitForSeconds(0.7f);
+    LeanTween.color(arr[high], Color.white, 0.1f);
+
+    int partitionIndex = i + 1;
+
+    yield return StartCoroutine(QuickSort(arr, low, partitionIndex - 1));
+    yield return StartCoroutine(QuickSort(arr, partitionIndex + 1, high));
+}
+
+void MoverCubo(GameObject cubo, int nuevaPosicion)
+{
+    Vector3 posicionObjetivo = new Vector3(nuevaPosicion, cubo.transform.localScale.y / 2f, 0);
+
+    // Animación para mover el cubo
+    LeanTween.moveLocal(cubo, posicionObjetivo, 0.5f);
+}
 
 }
